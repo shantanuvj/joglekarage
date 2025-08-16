@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #e0f2fe, #bfdbfe);
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            position: relative;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        th {
+            background: #3b82f6;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        th:hover {
+            background: #2563eb;
+        }
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+        tr:hover {
+            background: #e5e7eb;
+            transition: background 0.2s;
+        }
+        td {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        button {
+            transition: transform 0.2s, background 0.3s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            background: #1d4ed8;
+        }
+        h1 {
+            text-align: center;
+            color: #1e40af;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        /* Center age-related columns */
+        td:nth-child(3),
+        td:nth-child(4),
+        td:nth-child(5),
+        td:nth-child(6),
+        td:nth-child(7),
+        th:nth-child(3),
+        th:nth-child(4),
+        th:nth-child(5),
+        th:nth-child(6),
+        th:nth-child(7) {
+            text-align: center;
+        }
+        /* Freeze Name column on mobile */
+        @media (max-width: 768px) {
+            th:nth-child(1),
+            td:nth-child(1) {
+                position: sticky;
+                left: 0;
+                background: #3b82f6;
+                color: white;
+                z-index: 10;
+                border-right: 2px solid #e5e7eb;
+            }
+            td:nth-child(1) {
+                background: white;
+                color: black;
+            }
+            tr:nth-child(even) td:nth-child(1) {
+                background: #f9fafb;
+            }
+            tr:hover td:nth-child(1) {
+                background: #e5e7eb;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Real-Time Age Calculator (as of Now)</h1>
+        <div class="flex space-x-4 mb-6 justify-center">
+            <button onclick="sortTable(true)" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md">Sort by Age (Oldest First)</button>
+            <button onclick="sortTable(false)" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md">Sort by Age (Youngest First)</button>
+        </div>
+        <div class="table-container">
+            <table id="ageTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Birth Date</th>
+                        <th>Total Months</th>
+                        <th>Total Days</th>
+                        <th>Total Hours</th>
+                        <th>Total Minutes</th>
+                        <th>Total Seconds</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Govindrao</td>
+                        <td>29/03/1940</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Vijaya</td>
+                        <td>13/10/1945</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Harshal</td>
+                        <td>26/07/1976</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Archana</td>
+                        <td>14/12/1980</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Yash</td>
+                        <td>16/04/2003</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Vilas</td>
+                        <td>13/12/1947</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Neha</td>
+                        <td>03/05/1950</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Jui</td>
+                        <td>04/01/1991</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Varun</td>
+                        <td>01/01/1985</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Vidyadhar</td>
+                        <td>29/09/1949</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Vinita</td>
+                        <td>24/04/1955</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Namrata</td>
+                        <td>18/05/1987</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Kanishka</td>
+                        <td>01/01/1980</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Nishad</td>
+                        <td>20/10/1996</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Ninad</td>
+                        <td>20/10/1996</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Madhuri</td>
+                        <td>18/09/1952</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Kalpak</td>
+                        <td>24/05/1992</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Anuja</td>
+                        <td>24/04/1992</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Vasudev</td>
+                        <td>22/06/1955</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Daksha</td>
+                        <td>16/05/1958</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Shantanu</td>
+                        <td>08/05/1991</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Ravi</td>
+                        <td>24/02/1958</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Geeta</td>
+                        <td>07/06/1958</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Snehal</td>
+                        <td>14/09/1983</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Janu</td>
+                        <td>04/11/1987</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Charvy</td>
+                        <td>07/05/2013</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Abhishek</td>
+                        <td>29/03/1990</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Rutuja</td>
+                        <td>11/06/1994</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Nishchaya</td>
+                        <td>05/02/2024</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const table = document.getElementById('ageTable');
+        const tbody = table.tBodies[0];
+        const rows = Array.from(tbody.rows);
+
+        const people = rows.map(row => {
+            const bdateStr = row.cells[1].textContent.trim();
+            const [day, month, year] = bdateStr.split('/').map(Number);
+            const birthDate = new Date(year, month - 1, day, 0, 0, 0);
+            return { row, birthDate };
+        });
+
+        function calculateTotalAge(birthDate, now) {
+            const msDiff = now - birthDate;
+            const totalSeconds = Math.floor(msDiff / 1000);
+            const totalMinutes = Math.floor(totalSeconds / 60);
+            const totalHours = Math.floor(totalMinutes / 60);
+            const totalDays = Math.floor(totalHours / 24);
+            const totalMonths = Math.floor(totalDays / 30.42); // Average days per month
+
+            return {
+                totalMonths: totalMonths,
+                totalDays: totalDays,
+                totalHours: totalHours,
+                totalMinutes: totalMinutes,
+                totalSeconds: totalSeconds,
+                msDiff // For sorting
+            };
+        }
+
+        function updateAges() {
+            const now = new Date();
+            people.forEach(({ row, birthDate }) => {
+                const age = calculateTotalAge(birthDate, now);
+                row.cells[2].textContent = age.totalMonths.toLocaleString();
+                row.cells[3].textContent = age.totalDays.toLocaleString();
+                row.cells[4].textContent = age.totalHours.toLocaleString();
+                row.cells[5].textContent = age.totalMinutes.toLocaleString();
+                row.cells[6].textContent = age.totalSeconds.toLocaleString();
+                row.dataset.age = age.msDiff;
+            });
+        }
+
+        // Initial update
+        updateAges();
+
+        // Update every second
+        setInterval(updateAges, 1000);
+
+        function sortTable(descending) {
+            const rowsArray = Array.from(rows);
+            rowsArray.sort((a, b) => {
+                const ageA = parseFloat(a.dataset.age);
+                const ageB = parseFloat(b.dataset.age);
+                return descending ? ageB - ageA : ageA - ageB;
+            });
+            rowsArray.forEach(row => tbody.appendChild(row));
+        }
+    </script>
+</body>
+</html>
